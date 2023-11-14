@@ -1,0 +1,104 @@
+version: '3.7'
+
+services:
+  frontend:
+    container_name: ${COMPOSE_PROJECT_NAME}_frontend
+    build:
+      context: services/frontend
+    volumes:
+      - type: bind
+        source: ./services/frontend/src/dist/spa
+        target: /usr/share/nginx/html
+      - type: bind
+        source: ./services/frontend/docker/nginx/conf.d
+        target: /etc/nginx/conf.d
+    ports:
+      - "${CUSTOM_ENV_PORT_FRONTEND}:80"
+    restart: always
+
+  backend_web:
+    container_name: ${COMPOSE_PROJECT_NAME}_backend_api
+    build:
+      context: services/backend
+    volumes:
+      - type: bind
+        source: ./services/backend/src
+        target: /var/www/app
+    ports:
+      - "${CUSTOM_ENV_PORT_BACKEND_WEB}:80"
+    depends_on:
+      - db
+      - redis
+    restart: always
+
+  backend_cli_cron:
+    container_name: ${COMPOSE_PROJECT_NAME}_backend_cli_cron
+    build:
+      context: services/backend_cli_cron
+    volumes:
+      - type: bind
+        source: ./services/backend/src
+        target: /usr/src/app
+    depends_on:
+      - db
+      - redis
+    restart: always
+
+  backend_cli_supervisor:
+    container_name: ${COMPOSE_PROJECT_NAME}_backend_cli_supervisor
+    build:
+      context: services/backend_cli_supervisor
+    volumes:
+      - type: bind
+        source: ./services/backend/src
+        target: /usr/src/app
+    depends_on:
+      - db
+      - redis
+    restart: always
+
+  redis:
+    container_name: ${COMPOSE_PROJECT_NAME}_redis
+    image: redis:alpine
+    command: redis-server --requirepass ${CUSTOM_ENV_REDIS_PASSWORD:-pass123456789}
+    restart: always
+
+  db:
+    container_name: ${COMPOSE_PROJECT_NAME}_db
+    image: mariadb
+    volumes:
+      - type: bind
+        source: ./services/db/storage
+        target: /var/lib/mysql
+    environment:
+      MARIADB_USER: "${CUSTOM_ENV_MARIADB_USER}"
+      MARIADB_PASSWORD: "${CUSTOM_ENV_MARIADB_PASSWORD}"
+      MARIADB_ROOT_PASSWORD: "${CUSTOM_ENV_MARIADB_ROOT_PASSWORD}"
+      MARIADB_DATABASE: "${CUSTOM_ENV_MARIADB_DATABASE}"
+    restart: always
+
+  phpmyadmin:
+    container_name: ${COMPOSE_PROJECT_NAME}_phpmyadmin
+    image: phpmyadmin
+    ports:
+      - "${CUSTOM_ENV_PORT_DB_PHPMYADMIN}:80"
+    environment:
+      - PMA_PORT=3306
+      - PMA_HOST=db
+    depends_on:
+      - db
+    restart: always
+
+#  swagger:
+#    container_name: ${COMPOSE_PROJECT_NAME}_swagger
+#    build:
+#      context: services/swagger
+#    volumes:
+#      - type: bind
+#        source: services/backend/src/docs/swagger/api_spec
+#        target: /service_data
+#    ports:
+#      - "${CUSTOM_ENV_PORT_SWAGGER}:8080"
+#    environment:
+#      - SWAGGER_JSON=/service_data/open_api_spec_3.0.x.json
+#    restart: always

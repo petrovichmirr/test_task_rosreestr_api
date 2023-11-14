@@ -1,0 +1,8 @@
+# Задания для планировщика cron
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# Запуск планировщика Laravel
+#  > /proc/1/fd/1 2>/proc/1/fd/2 - перенаправление вывода стандартного потока 1 и стандартного потока ошибок 2 в логи контейнера
+* * * * * php /usr/src/app/artisan schedule:run > /proc/1/fd/1 2>/proc/1/fd/2
