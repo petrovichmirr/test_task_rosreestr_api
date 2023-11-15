@@ -12,7 +12,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        //  Наполнение панели мониторинга показателей Horizon (https://laravel.com/docs/10.x/horizon#metrics)
+        $schedule->command('horizon:snapshot')->everyFiveMinutes();
     }
 
     /**

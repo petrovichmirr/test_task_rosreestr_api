@@ -12,10 +12,8 @@
         />
 
         <q-toolbar-title>
-          Quasar App
+          Тестовое задание | Росреестр API тест
         </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
     </q-header>
 
@@ -25,17 +23,67 @@
       show-if-above
     >
       <q-list>
-        <q-item-label
-          header
+        <q-item
+          clickable
+          :to="{ name: 'dashboard' }"
         >
-          Essential Links
-        </q-item-label>
+          <q-item-section avatar>
+            <q-icon
+              color="primary"
+              name="dashboard"
+            />
+          </q-item-section>
+          <q-item-section>
+            Сводка
+          </q-item-section>
+        </q-item>
 
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
+        <q-item
+          clickable
+          :to="{ name: 'queries_new' }"
+        >
+          <q-item-section avatar>
+            <q-icon
+              color="primary"
+              name="library_add"
+            />
+          </q-item-section>
+          <q-item-section>
+            Новый запрос в Росреестр
+          </q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
+          :to="{ name: 'queries_list' }"
+        >
+          <q-item-section avatar>
+            <q-icon
+              color="primary"
+              name="list"
+            />
+          </q-item-section>
+          <q-item-section>
+            Список запросов
+          </q-item-section>
+        </q-item>
+
+        <q-separator />
+
+        <q-item
+          clickable
+          @click="logout()"
+        >
+          <q-item-section avatar>
+            <q-icon
+              color="primary"
+              name="logout"
+            />
+          </q-item-section>
+          <q-item-section>
+            Выход
+          </q-item-section>
+        </q-item>
       </q-list>
     </q-drawer>
 
@@ -47,70 +95,34 @@
 
 <script>
 import { defineComponent, ref } from 'vue';
-import EssentialLink from 'components/EssentialLink.vue';
-
-const linksList = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev',
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework',
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev',
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev',
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev',
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev',
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev',
-  },
-];
 
 export default defineComponent({
   name: 'MainLayout',
-
-  components: {
-    EssentialLink,
-  },
 
   setup() {
     const leftDrawerOpen = ref(false);
 
     return {
-      essentialLinks: linksList,
       leftDrawerOpen,
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },
     };
+  },
+
+  methods: {
+    logout() {
+      this.$api.auth.logout()
+        .then(() => {
+          this.$router.push({ name: 'login' });
+        })
+        .catch(() => {
+          this.$q.notify({
+            message: 'Ошибка, попробуйте позже.',
+            color: 'accent',
+          });
+        });
+    },
   },
 });
 </script>

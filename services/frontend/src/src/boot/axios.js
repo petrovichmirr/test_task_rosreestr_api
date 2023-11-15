@@ -1,24 +1,30 @@
 import { boot } from 'quasar/wrappers';
 import axios from 'axios';
+import getApi from 'src/app/api_routes';
 
-// Be careful when using SSR for cross-request state pollution
-// due to creating a Singleton instance here;
-// If any client changes this (global) instance, it might be a
-// good idea to move this instance creation inside of the
-// "export default () => {}" function below (which runs individually
-// for each client)
-const api = axios.create({ baseURL: 'https://api.example.com' });
+axios.defaults.withCredentials = true;
+
+const apiClient = axios.create({
+  baseURL: process.env.API_BASE_URL,
+  headers: {
+    'X-Requested-With': 'XMLHttpRequest',
+    Accept: 'application/json',
+  },
+});
+const api = getApi(apiClient);
 
 export default boot(({ app }) => {
-  // for use inside Vue files (Options API) through this.$axios and this.$api
-
+  // in Vue: this.$axios
   app.config.globalProperties.$axios = axios;
-  // ^ ^ ^ this will allow you to use this.$axios (for Vue Options API form)
-  //       so you won't necessarily have to import axios in each vue file
 
+  // in Vue: this.$apiClient
+  app.config.globalProperties.$apiClient = apiClient;
+
+  // in Vue: this.$api
   app.config.globalProperties.$api = api;
-  // ^ ^ ^ this will allow you to use this.$api (for Vue Options API form)
-  //       so you can easily perform requests against your app's API
 });
 
-export { api };
+export {
+  apiClient,
+  api,
+};

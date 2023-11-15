@@ -139,6 +139,14 @@ backend_app_key_generate:
 	.bin/docker_exec_current_user.sh --docker_container_name=${COMPOSE_PROJECT_NAME}_backend_api --docker_container_command='php artisan key:generate'
 
 # ************ # ************ # ************
+# Команды, выполняемые из контейнера бекенда от имени текущего пользователя. Создание пользователей
+.PHONY: backend_create_users
+backend_create_users:
+	@echo "Создание пользователей..."
+	@echo "..."
+	.bin/docker_exec_current_user.sh --docker_container_name=${COMPOSE_PROJECT_NAME}_backend_api --docker_container_command='php artisan custom:create_users'
+
+# ************ # ************ # ************
 # Подготовка директорий: установка прав доступа (кеш, логи), создание файла лога с нужными правами
 .PHONY: backend_prepare_dirs
 backend_prepare_dirs:
