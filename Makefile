@@ -139,15 +139,17 @@ backend_app_key_generate:
 	.bin/docker_exec_current_user.sh --docker_container_name=${COMPOSE_PROJECT_NAME}_backend_api --docker_container_command='php artisan key:generate'
 
 # ************ # ************ # ************
-# Установка прав доступа к директориям (кеш, логи)
-.PHONY: backend_chmod_dirs
-backend_chmod_dirs:
+# Подготовка директорий: установка прав доступа (кеш, логи), создание файла лога с нужными правами
+.PHONY: backend_prepare_dirs
+backend_prepare_dirs:
 	@echo "Установка прав доступа к директориям (кеш, логи)..."
 	@echo "..."
 	chmod 777 ./services/backend/src/storage/framework/cache/data
 	chmod 777 ./services/backend/src/storage/framework/sessions
 	chmod 777 ./services/backend/src/storage/framework/views
 	chmod 777 ./services/backend/src/storage/logs
+	touch ./services/backend/src/storage/logs/laravel.log
+	chmod 666 ./services/backend/src/storage/logs/laravel.log
 
 # ************ # ************ # ************
 # Вывод текста перед операцией "Быстрая установка и развёртывание"
@@ -160,10 +162,10 @@ quick_install_and_deploy_echo:
 # Быстрая установка и развёртывание
 # ************ # ************ # ************
 .PHONY: quick_install_and_deploy
-quick_install_and_deploy: quick_install_and_deploy_echo copy_services_envs_from_examples node_js_build_image node_js_frontend_install node_js_frontend_build backend_chmod_dirs deploy_up backend_install_composer backend_app_key_generate backend_migrate
+quick_install_and_deploy: quick_install_and_deploy_echo copy_services_envs_from_examples node_js_build_image node_js_frontend_install node_js_frontend_build backend_prepare_dirs deploy_up backend_install_composer backend_app_key_generate backend_migrate
 
 # ************ # ************ # ************
 # Быстрая установка и развёртывание (docker compose v2)
 # ************ # ************ # ************
 .PHONY: dc2_quick_install_and_deploy
-dc2_quick_install_and_deploy: quick_install_and_deploy_echo copy_services_envs_from_examples node_js_build_image node_js_frontend_install node_js_frontend_build backend_chmod_dirs dc2_deploy_up backend_install_composer backend_app_key_generate backend_migrate
+dc2_quick_install_and_deploy: quick_install_and_deploy_echo copy_services_envs_from_examples node_js_build_image node_js_frontend_install node_js_frontend_build backend_prepare_dirs dc2_deploy_up backend_install_composer backend_app_key_generate backend_migrate
