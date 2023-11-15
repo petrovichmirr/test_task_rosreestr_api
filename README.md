@@ -6,7 +6,7 @@
 
 Клонируем репозиторий:
 ```bash
-git clone rosreestr_api
+git clone https://github.com/petrovichmirr/test_task_rosreestr_api.git rosreestr_api
 ```
 
 Переходим в корневую папку инфраструктуры и создаём в ней файл с переменными окружения `.env` (на основе имеющегося файла `.env.example`):
@@ -41,3 +41,8 @@ docker ps
 Статус API бекенда:
 
 [http://localhost:30002/api/v1/test](http://localhost:30002/api/v1/test)
+
+
+## Удаление
+
+Остановка и удаление контейнеров...
