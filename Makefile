@@ -138,6 +138,16 @@ backend_app_key_generate:
 	@echo "..."
 	.bin/docker_exec_current_user.sh --docker_container_name=${COMPOSE_PROJECT_NAME}_backend_api --docker_container_command='php artisan key:generate'
 
+# ************ # ************ # ************
+# Установка прав доступа к директориям (кеш, логи)
+.PHONY: backend_chmod_dirs
+backend_chmod_dirs:
+	@echo "Установка прав доступа к директориям (кеш, логи)..."
+	@echo "..."
+	chmod 777 ./services/backend/src/storage/framework/cache/data
+	chmod 777 ./services/backend/src/storage/framework/sessions
+	chmod 777 ./services/backend/src/storage/framework/views
+	chmod 777 ./services/backend/src/storage/logs
 
 # ************ # ************ # ************
 # Вывод текста перед операцией "Быстрая установка и развёртывание"
