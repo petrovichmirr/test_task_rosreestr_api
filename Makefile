@@ -160,10 +160,10 @@ quick_install_and_deploy_echo:
 # Быстрая установка и развёртывание
 # ************ # ************ # ************
 .PHONY: quick_install_and_deploy
-quick_install_and_deploy: quick_install_and_deploy_echo copy_services_envs_from_examples node_js_build_image node_js_frontend_install node_js_frontend_build deploy_up backend_install_composer backend_app_key_generate backend_migrate
+quick_install_and_deploy: quick_install_and_deploy_echo copy_services_envs_from_examples node_js_build_image node_js_frontend_install node_js_frontend_build backend_chmod_dirs deploy_up backend_install_composer backend_app_key_generate backend_migrate
 
 # ************ # ************ # ************
 # Быстрая установка и развёртывание (docker compose v2)
 # ************ # ************ # ************
 .PHONY: dc2_quick_install_and_deploy
-dc2_quick_install_and_deploy: quick_install_and_deploy_echo copy_services_envs_from_examples node_js_build_image node_js_frontend_install node_js_frontend_build dc2_deploy_up backend_install_composer backend_app_key_generate backend_migrate
+dc2_quick_install_and_deploy: quick_install_and_deploy_echo copy_services_envs_from_examples node_js_build_image node_js_frontend_install node_js_frontend_build backend_chmod_dirs dc2_deploy_up backend_install_composer backend_app_key_generate backend_migrate
