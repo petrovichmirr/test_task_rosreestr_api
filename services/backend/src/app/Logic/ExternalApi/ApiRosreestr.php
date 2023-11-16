@@ -10,6 +10,11 @@ use GuzzleHttp\Exception\GuzzleException;
 class ApiRosreestr
 {
     /**
+     * @var string Код ошибки: объект не найден
+     */
+    public const ERROR_CODE_OBJECT_NOT_FOUND = 'Object not found';
+
+    /**
      * Получение сведений об объекте недвижимости из базы ГКН (Государственный кадастр недвижимости - технические сведения об объекте) по кадастровому номеру
      *
      * @param string $cadastralNumber Кадастровый номер

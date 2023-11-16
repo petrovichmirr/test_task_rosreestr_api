@@ -50,7 +50,6 @@ export default defineComponent({
           api.real_estate_objects.getObjectByCadastralNumber(cadastralNumber.value)
             .then((response) => {
               this.$q.notify({
-                caption: 'Результат запроса',
                 message: response.status
                   ? `${response.text_status} Результаты запроса можно посмотреть в списке запросов`
                   : response.text_status,
