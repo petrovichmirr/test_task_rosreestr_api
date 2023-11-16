@@ -34,7 +34,6 @@ class LoginRequest extends FormRequest
         ];
     }
 
-    // TODO: проверка, тест кода authenticate и прочее, перенести в бизнес логику
     /**
      * Attempt to authenticate the request's credentials.
      *

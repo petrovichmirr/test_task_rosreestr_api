@@ -5,7 +5,7 @@ namespace App\Logic\ExternalApi;
 use GuzzleHttp\Exception\GuzzleException;
 
 /**
- * Бизнес - логика: Запросы к API статистики сборов
+ * Бизнес - логика: запросы к API статистики сборов
  */
 class ApiRosreestr
 {

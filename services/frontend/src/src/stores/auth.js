@@ -9,7 +9,7 @@ export default defineStore('auth', {
     check() {
       return api.auth.check()
         .then((response) => {
-          const isAuthenticated = response.data;
+          const isAuthenticated = response.status;
 
           if (isAuthenticated) {
             this.user = response.user;

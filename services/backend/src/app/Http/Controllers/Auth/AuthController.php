@@ -50,7 +50,7 @@ class AuthController extends Controller
     public function check(): JsonResponse
     {
         return response()->json([
-            'data' => Auth::check(),
+            'status' => Auth::check(),
             'user' => Auth::user(),
         ]);
     }

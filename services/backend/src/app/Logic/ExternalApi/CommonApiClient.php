@@ -7,7 +7,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 
 /**
- * Бизнес - логика: Клиент для запросов к API сторонних сервисов
+ * Бизнес - логика: клиент для запросов к API сторонних сервисов
  */
 class CommonApiClient
 {

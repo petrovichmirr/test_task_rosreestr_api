@@ -1,6 +1,6 @@
 import { Notify } from 'quasar';
 
-const defaultErrorMessage = 'Упс, ошибка! Попробуйте позже.';
+const defaultErrorMessage = 'Упс, что-то пошло не так! Попробуйте позже.';
 
 export default (apiClient) => {
   const getResponseFromApi = async (
@@ -17,7 +17,13 @@ export default (apiClient) => {
     .catch(() => {
       Notify.create({
         message: errorMessage,
-        color: 'accent',
+        type: 'negative',
+        timeout: 15000,
+        progress: true,
+        position: 'top',
+        actions: [
+          { icon: 'close', color: 'white', round: true },
+        ],
       });
     });
 
@@ -25,14 +31,23 @@ export default (apiClient) => {
     auth: {
       csrfCookie: () => getResponseFromApi(process.env.API_END_POINT_AUTH_CSRF, {}, 'get'),
 
-      login: (data) => getResponseFromApi('auth/login', data, 'post', 'Ошибка входа, проверьте правильность email и пароля!'),
+      login: (data) => getResponseFromApi(
+        'auth/login',
+        data,
+        'post',
+        'Ошибка входа, проверьте правильность email и пароля!',
+      ),
 
       logout: () => getResponseFromApi('auth/logout'),
 
       check: () => getResponseFromApi('auth/check'),
     },
 
-    // todo: {
-    // },
+    real_estate_objects: {
+      getObjectByCadastralNumber: (cadastralNumber) => getResponseFromApi(
+        'real-estate-objects/get-object-by-cadastral-number',
+        { cadastral_number: cadastralNumber },
+      ),
+    },
   };
 };
