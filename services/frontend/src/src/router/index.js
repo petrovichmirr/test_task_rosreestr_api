@@ -3,6 +3,7 @@ import {
   createRouter, createMemoryHistory, createWebHistory, createWebHashHistory,
 } from 'vue-router';
 import { api } from 'src/boot/axios';
+import useAuthStore from 'stores/auth';
 import routes from './routes';
 
 export default route(async (/* { store, ssrContext } */) => {
@@ -22,27 +23,22 @@ export default route(async (/* { store, ssrContext } */) => {
 
   await api.auth.csrfCookie();
 
-  Router.beforeEach(async (to) => {
-    const authCheckResponse = await api.auth.check()
-      .then((response) => {
-        const isAuthenticated = response.data;
+  const authStore = useAuthStore();
 
-        if (!isAuthenticated && (to.name !== 'login')) {
-          // redirect the user to the login page
-          return { name: 'login' };
-        }
+  Router.beforeEach((to) => authStore.check()
+    .then((isAuthenticated) => {
+      if (!isAuthenticated && (to.name !== 'login')) {
+        // redirect the user to the login page
+        return { name: 'login' };
+      }
 
-        if (isAuthenticated && (to.name === 'login')) {
-          // redirect the user to the dashboard page
-          return { name: 'dashboard' };
-        }
+      if (isAuthenticated && (to.name === 'login')) {
+        // redirect the user to the dashboard page
+        return { name: 'dashboard' };
+      }
 
-        return true;
-      })
-      .catch(() => false);
-
-    return authCheckResponse;
-  });
+      return true;
+    }));
 
   return Router;
 });

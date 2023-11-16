@@ -39,7 +39,7 @@ export default defineComponent({
 
   data() {
     return {
-      email: 'user_1@m.local',
+      email: 'mail_1@m.local',
       password: 'pwd_user_1',
     };
   },

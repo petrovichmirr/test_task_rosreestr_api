@@ -14,6 +14,14 @@
         <q-toolbar-title>
           Тестовое задание | Росреестр API тест
         </q-toolbar-title>
+
+        <div>
+          <q-icon
+            name="account_circle"
+            size="1.7rem"
+          />
+          {{ userName }}
+        </div>
       </q-toolbar>
     </q-header>
 
@@ -95,6 +103,7 @@
 
 <script>
 import { defineComponent, ref } from 'vue';
+import useAuthStore from 'stores/auth';
 
 export default defineComponent({
   name: 'MainLayout',
@@ -102,7 +111,10 @@ export default defineComponent({
   setup() {
     const leftDrawerOpen = ref(false);
 
+    const authStore = useAuthStore();
+
     return {
+      authStore,
       leftDrawerOpen,
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
@@ -110,17 +122,17 @@ export default defineComponent({
     };
   },
 
+  computed: {
+    userName() {
+      return this.authStore.user ? `${this.authStore.user.name} | ${this.authStore.user.email}` : '';
+    },
+  },
+
   methods: {
     logout() {
       this.$api.auth.logout()
         .then(() => {
           this.$router.push({ name: 'login' });
-        })
-        .catch(() => {
-          this.$q.notify({
-            message: 'Ошибка, попробуйте позже.',
-            color: 'accent',
-          });
         });
     },
   },

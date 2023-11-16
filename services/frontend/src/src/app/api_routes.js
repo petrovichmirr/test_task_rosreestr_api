@@ -30,8 +30,6 @@ export default (apiClient) => {
       logout: () => getResponseFromApi('auth/logout'),
 
       check: () => getResponseFromApi('auth/check'),
-
-      // getCurrentUser: () => apiClient.post('auth/get-current-user'), // TODO: реализовать
     },
 
     // todo: {
