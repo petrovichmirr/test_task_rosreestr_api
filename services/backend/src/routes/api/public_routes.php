@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Logic\ExternalApi\ApiRosreestr;
+use App\Models\RealEstateObject;
+use App\Models\RealEstateObjectQuery;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,10 +21,5 @@ Route::post('/auth/check', [AuthController::class, 'check']);
 
 // Test
 Route::get('/test', function () {
-//    $cadastralNumber = '52:18:0070256:1560';
-//    $gknData = ApiRosreestr::getGknObject($cadastralNumber);
-//
-//    return response()->json($gknData);
-
     return 'API PUBLIC OK';
 });

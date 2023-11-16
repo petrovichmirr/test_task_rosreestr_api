@@ -1,13 +1,16 @@
 import { defineStore } from 'pinia';
-// import { api } from 'boot/axios';
+import { api } from 'boot/axios';
 
 export default defineStore('real_estate_objects', {
   state: () => ({
-    realEstateObjects: null,
+    realEstateObjects: [],
   }),
   actions: {
-    // getObjectByCadastralNumber(cadastralNumber) {
-    //   return api.real_estate_objects.getObjectByCadastralNumber(cadastralNumber);
-    // },
+    getObjects() {
+      api.real_estate_objects.getObjects()
+        .then((response) => {
+          this.realEstateObjects = response.data;
+        });
+    },
   },
 });

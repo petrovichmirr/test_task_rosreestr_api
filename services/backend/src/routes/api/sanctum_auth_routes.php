@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('real-estate-objects')->group(function () {
     // Получение сведений об объекте недвижимости по кадастровому номеру
     Route::post('/get-object-by-cadastral-number', [RealEstateObjectsController::class, 'getObjectByCadastralNumber']);
+
+    // Получение списка объектов недвижимости, запрошенных текущим пользователем
+    Route::post('/get-objects', [RealEstateObjectsController::class, 'getObjects']);
 });
 
 // Test

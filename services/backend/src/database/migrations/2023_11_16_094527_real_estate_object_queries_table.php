@@ -22,6 +22,7 @@ return new class extends Migration {
             $table->foreign('user_id')->references('id')->on(User::getTableName());
 
             $table->unsignedBigInteger('real_estate_object_id')
+                ->nullable()
                 ->comment('ID объекта недвижимости');
             // Ограничения внешнего ключа
             $table->foreign('real_estate_object_id')->references('id')->on(RealEstateObject::getTableName());

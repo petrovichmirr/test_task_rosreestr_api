@@ -15,12 +15,23 @@ class RealEstateObjectsController extends Controller
      *
      * @param GetObjectByCadastralNumberRequest $request
      * @return JsonResponse
-     * @throws GuzzleException
      */
     public function getObjectByCadastralNumber(GetObjectByCadastralNumberRequest $request): JsonResponse
     {
         $validated = $request->validated();
 
         return response()->json(RealEstateObjects::getObjectByCadastralNumber($validated['cadastral_number']));
+    }
+
+    /**
+     * Получение списка объектов недвижимости, запрошенных текущим пользователем
+     *
+     * @return JsonResponse
+     */
+    public function getObjects(): JsonResponse
+    {
+        return response()->json([
+            'data' => RealEstateObjects::getObjects(),
+        ]);
     }
 }

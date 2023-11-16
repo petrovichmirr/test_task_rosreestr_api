@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Utils\GetTableName;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * Запрос к базе объектов недвижимости
@@ -34,4 +35,30 @@ class RealEstateObjectQuery extends Model
         'status',
         'text_status',
     ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'status' => 'boolean',
+    ];
+
+    /**
+     * The attributes that should be visible in serialization.
+     *
+     * @var array<string>
+     */
+    protected $visible = [
+        'id',
+        'realEstateObject', // Отношение realEstateObject (HasOne)
+        'status',
+        'text_status',
+    ];
+
+    public function realEstateObject(): HasOne
+    {
+        return $this->hasOne(RealEstateObject::class, 'id', 'real_estate_object_id');
+    }
 }

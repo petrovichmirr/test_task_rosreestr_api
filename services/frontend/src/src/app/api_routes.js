@@ -48,6 +48,8 @@ export default (apiClient) => {
         'real-estate-objects/get-object-by-cadastral-number',
         { cadastral_number: cadastralNumber },
       ),
+
+      getObjects: () => getResponseFromApi('real-estate-objects/get-objects'),
     },
   };
 };
