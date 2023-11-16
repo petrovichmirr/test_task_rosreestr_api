@@ -45,18 +45,12 @@ export default defineComponent({
   },
 
   methods: {
-    // TODO: обработка ошибок входа
     login() {
       api.auth.login({
         email: this.email,
         password: this.password,
       }).then(() => {
         this.$router.push({ name: 'dashboard' });
-      }).catch(() => {
-        this.$q.notify({
-          message: 'Ошибка входа, проверьте правильность email и пароля!',
-          color: 'accent',
-        });
       });
     },
   },

@@ -1,16 +1,40 @@
-export default (apiClient) => ({
-  auth: {
-    csrfCookie: () => apiClient.get(process.env.API_END_POINT_AUTH_CSRF),
+import { Notify } from 'quasar';
 
-    login: (data) => apiClient.post('auth/login', data),
+const defaultErrorMessage = 'Упс, ошибка! Попробуйте позже.';
 
-    logout: () => apiClient.post('auth/logout'),
+export default (apiClient) => {
+  const getResponseFromApi = async (
+    url,
+    data = {},
+    method = 'post',
+    errorMessage = defaultErrorMessage,
+  ) => apiClient.request({
+    method,
+    url,
+    data,
+  })
+    .then((response) => response.data)
+    .catch(() => {
+      Notify.create({
+        message: errorMessage,
+        color: 'accent',
+      });
+    });
 
-    check: () => apiClient.post('auth/check'),
+  return {
+    auth: {
+      csrfCookie: () => getResponseFromApi(process.env.API_END_POINT_AUTH_CSRF, {}, 'get'),
 
-    // getCurrentUser: () => apiClient.post('auth/get-current-user'), // TODO: реализовать
-  },
+      login: (data) => getResponseFromApi('auth/login', data, 'post', 'Ошибка входа, проверьте правильность email и пароля!'),
 
-  // todo: {
-  // },
-});
+      logout: () => getResponseFromApi('auth/logout'),
+
+      check: () => getResponseFromApi('auth/check'),
+
+      // getCurrentUser: () => apiClient.post('auth/get-current-user'), // TODO: реализовать
+    },
+
+    // todo: {
+    // },
+  };
+};

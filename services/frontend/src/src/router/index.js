@@ -25,7 +25,7 @@ export default route(async (/* { store, ssrContext } */) => {
   Router.beforeEach(async (to) => {
     const authCheckResponse = await api.auth.check()
       .then((response) => {
-        const isAuthenticated = response.data.data;
+        const isAuthenticated = response.data;
 
         if (!isAuthenticated && (to.name !== 'login')) {
           // redirect the user to the login page
