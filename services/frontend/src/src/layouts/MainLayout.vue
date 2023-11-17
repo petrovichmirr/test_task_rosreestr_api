@@ -42,7 +42,7 @@
             />
           </q-item-section>
           <q-item-section>
-            Сводка
+            Описание проекта
           </q-item-section>
         </q-item>
 

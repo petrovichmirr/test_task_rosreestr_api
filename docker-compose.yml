@@ -88,17 +88,3 @@ services:
     depends_on:
       - db
     restart: always
-
-#  swagger:
-#    container_name: ${COMPOSE_PROJECT_NAME}_swagger
-#    build:
-#      context: services/swagger
-#    volumes:
-#      - type: bind
-#        source: services/backend/src/docs/swagger/api_spec
-#        target: /service_data
-#    ports:
-#      - "${CUSTOM_ENV_PORT_SWAGGER}:8080"
-#    environment:
-#      - SWAGGER_JSON=/service_data/open_api_spec_3.0.x.json
-#    restart: always

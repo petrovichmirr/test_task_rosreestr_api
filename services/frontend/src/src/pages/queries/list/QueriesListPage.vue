@@ -49,13 +49,31 @@ const tableColumns = [
   {
     name: 'cadastral_number',
     label: 'Кадастровый номер',
-    field: (row) => (row.real_estate_object ? row.real_estate_object.cadastral_number : ''),
+    field: (row) => (row.real_estate_object?.cadastral_number ?? ''),
     sortable: true,
   },
   {
     name: 'address',
     label: 'Адрес',
-    field: (row) => (row.real_estate_object ? row.real_estate_object.address : ''),
+    field: (row) => (row.real_estate_object?.address ?? ''),
+    sortable: true,
+  },
+  {
+    name: 'info',
+    label: 'Информация',
+    field: (row) => (
+      row.real_estate_object
+        ? `
+      Дата постановки на учет: ${row.real_estate_object?.full_data?.parcelData?.dateCreate ?? '-'}.
+      Кадастровая стоимость: ${row.real_estate_object?.full_data?.parcelData?.cadCost ?? '-'} руб.
+      Дата определения кад. стоимости: ${row.real_estate_object?.full_data?.parcelData?.dateCost ?? '-'}.
+
+      Кадастровый инженер: ${row.real_estate_object?.full_data?.parcelData?.ciSurname ?? ''}
+      ${row.real_estate_object?.full_data?.parcelData?.ciFirst ?? ''}
+      ${row.real_estate_object?.full_data?.parcelData?.ciPatronymic ?? ''}.
+      `
+        : ''
+    ),
     sortable: true,
   },
 ];

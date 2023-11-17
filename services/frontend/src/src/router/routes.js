@@ -26,11 +26,6 @@ const routes = [
         name: 'queries_list',
         component: () => import('pages/queries/list/QueriesListPage.vue'),
       },
-      {
-        path: '/queries/list/:id',
-        name: 'queries_list_item',
-        component: () => import('pages/queries/item/QueriesItemPage.vue'),
-      },
     ],
   },
 
