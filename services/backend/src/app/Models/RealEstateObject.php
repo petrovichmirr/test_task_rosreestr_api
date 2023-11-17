@@ -31,10 +31,6 @@ class RealEstateObject extends Model
         'id',
         'cadastral_number',
         'address',
-        'record_created_at',
-        'record_updated_at',
-        'owners_count',
-        'restrictions_count',
         'full_data',
     ];
 
@@ -44,8 +40,6 @@ class RealEstateObject extends Model
      * @var array
      */
     protected $casts = [
-        'record_created_at' => 'date:Y-m-d',
-        'record_updated_at' => 'date:Y-m-d',
         'full_data' => 'object',
     ];
 
@@ -57,9 +51,6 @@ class RealEstateObject extends Model
     protected $visible = [
         'cadastral_number',
         'address',
-        'record_created_at',
-        'record_updated_at',
-        'owners_count',
-        'restrictions_count',
+        'full_data',
     ];
 }

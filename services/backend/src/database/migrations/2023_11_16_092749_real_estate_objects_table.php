@@ -21,20 +21,6 @@ return new class extends Migration {
             $table->text('address')
                 ->comment('Адрес');
 
-            $table->date('record_created_at')
-                ->comment('Дата создания записи');
-
-            $table->date('record_updated_at')
-                ->comment('Дата обновления записи');
-
-            $table->smallInteger('owners_count')
-                ->nullable()
-                ->comment('Количество собственников');
-
-            $table->smallInteger('restrictions_count')
-                ->nullable()
-                ->comment('Количество ограничений');
-
             $table->json('full_data')
                 ->comment('Полные данные объекта');
 

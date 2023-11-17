@@ -1,9 +1,6 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
-use App\Logic\ExternalApi\ApiRosreestr;
-use App\Models\RealEstateObject;
-use App\Models\RealEstateObjectQuery;
 use Illuminate\Support\Facades\Route;
 
 /*

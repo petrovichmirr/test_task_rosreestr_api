@@ -82,10 +82,6 @@ class RealEstateObjects
                 $realEstateObject = RealEstateObject::query()->create([
                     'cadastral_number' => $gknData->objectData->objectCn,
                     'address' => $gknData->objectData->addressNote,
-                    'record_created_at' => Date::parse($gknData->objectData->dateLoad), // TODO: похоже, не те данные запроса
-                    'record_updated_at' => Date::parse($gknData->objectData->actualDate), // TODO: похоже, не те данные запроса
-                    'owners_count' => 1,
-                    'restrictions_count' => 0,
                     'full_data' => $gknData,
                 ]);
             }

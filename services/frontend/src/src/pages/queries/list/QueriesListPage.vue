@@ -16,6 +16,8 @@
         :columns="tableColumns"
         row-key="id"
         :rows="realEstateObjectsStore.realEstateObjects"
+        :rows-per-page-options="[15, 30, 0]"
+        wrap-cells
       />
     </div>
   </div>
